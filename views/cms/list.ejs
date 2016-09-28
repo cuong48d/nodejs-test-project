@@ -1,0 +1,56 @@
+<%include ./header%>
+<%include ./leftmenu%>
+<div class="container-fluid">
+                <div class="side-body">
+                    <div class="page-title">
+                        <span class="title">Item Manage</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="card">
+                                <div class="card-header">
+
+                                    <div class="card-title">
+                                    <!--<div class="title">Bảng dữ liệu</div>-->
+                                    <a href="/cms/item" type="button" class="btn btn-success btn-lg">Add New</a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <table class="datatable table table-striped" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                
+                                                <th>Date</th>
+                                                <th>Total Time</th>
+                                                <th>Notes</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                
+                                                <th>Date</th>
+                                                <th>Total Time</th>
+                                                <th>Notes</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                        <%for(x in item_list){%>
+                                            <tr>
+                                                <td><%= item_list[x].date.split('T')[0]%></td>
+                                                <td><%= item_list[x].total_time %> h</td>
+                                                <td><%= item_list[x].notes %></td>
+                                                <td><a href="/cms/item/<%=item_list[x]._id%>" type="button" class="btn btn-primary">Edit</a><a href="/cms/deleteitem/<%=item_list[x]._id%>" type="button" class="btn btn-danger">Delete</a></td>
+                                            </tr>
+                                            <%}%>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<%include ./footer%>
