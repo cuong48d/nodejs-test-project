@@ -5,7 +5,7 @@ var Item = require('../models/item');
 var myapi = require('../config/API');
 router.route('/')
 	.get(isLoggedIn,function(req,res){
-		Item.count({},function(err, num){
+		Item.count({creator: req.user._id},function(err, num){
 		res.render('cms/index',{
 			headerPath: 'Home',
 			user: req.user,
@@ -14,7 +14,13 @@ router.route('/')
 		})
 	})
 router.get('/listitem', isLoggedIn, function(req,res){
-	request(myapi.ADD_GET_ALL, function (error, response, body) {
+	var options = {
+			headers: {
+            	"x-user-id": req.user._id
+        	},
+			url: myapi.ADD_GET_ALL
+	}
+	request(options, function (error, response, body) {
     	if (!error && response.statusCode == 200) {
        		res.render('cms/list',{
                	headerPath: 'Item',
@@ -36,12 +42,17 @@ router.route('/item')
 		})
 	})
 	.post(function(req,res){
+		// console.log(req.user._id)
 		var options = {
 			url: myapi.ADD_GET_ALL,
+			headers: {
+            "x-user-id": req.user._id
+        	},
 			form:{
 				date: req.body.date,
 				total_time: req.body.total_time,
 				notes: req.body.notes,
+				// userid: req.user._id
 			},
 			method: 'POST'
 		}
